@@ -1,0 +1,17 @@
+PWD c:/Code/FH/HgbThesisEN
+INPUT c:/texlive/2020/texmf.cnf
+INPUT c:/texlive/2020/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT c:/Code/FH/HgbThesisEN/chapters/introduction/index.tex
+OUTPUT c:/Code/FH/HgbThesisEN/chapters/introduction/index.log
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT ./chapters/introduction/motivation.tex
+INPUT chapters/introduction/motivation.tex

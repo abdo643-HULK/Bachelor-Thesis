@@ -1,0 +1,94 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{Drake1948}{report}{}
+      \name{author}{3}{}{%
+        {{hash=93ce160ce3d24db8818d0342c69548c6}{%
+           family={Drake},
+           familyi={D\bibinitperiod},
+           given={Hubert\bibnamedelima M.},
+           giveni={H\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=b63992e3cb41a27785e1ff367ffab101}{%
+           family={McLaughlin},
+           familyi={M\bibinitperiod},
+           given={Milton\bibnamedelima D.},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=c30db2af3e1bcdedffd46c5765cd8101}{%
+           family={Goodman},
+           familyi={G\bibinitperiod},
+           given={Harold\bibnamedelima R.},
+           giveni={H\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {NASA Dryden Flight Research Center}%
+      }
+      \list{location}{1}{%
+        {Edwards, CA}%
+      }
+      \strng{namehash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \strng{fullhash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \strng{bibnamehash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \strng{authorbibnamehash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \strng{authornamehash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \strng{authorfullhash}{b8605694848ec71ccfdbd29953a1dbdf}
+      \field{sortinit}{D}
+      \field{sortinithash}{c438b3d5d027251ba63f5ed538d98af5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{NACA-RM-L8A05A}
+      \field{title}{Results obtained during accelerated transonic tests of the {Bell} {XS-1} airplane in flights to a {MACH} number of 0.92}
+      \field{type}{techreport}
+      \field{year}{1948}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nasa.gov/centers/dryden/pdf/87528main_RM-L8A05A.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.nasa.gov/centers/dryden/pdf/87528main_RM-L8A05A.pdf
+      \endverb
+    \endentry
+    \entry{WikiReliquienschrein2020}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labeltitlesource}{title}
+      \field{day}{20}
+      \field{langid}{ngerman}
+      \field{month}{10}
+      \field{title}{Reliquienschrein}
+      \field{urlday}{12}
+      \field{urlmonth}{5}
+      \field{urlyear}{2021}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://de.wikipedia.org/wiki/Reliquienschrein
+      \endverb
+      \verb{url}
+      \verb https://de.wikipedia.org/wiki/Reliquienschrein
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
