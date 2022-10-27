@@ -1,0 +1,7 @@
+{
+	"latex-workshop.latex.recipe.default": "pdflatex -> biber -> pdflatex*2",
+	"ltex.dictionary": {
+		"en": ["Abdo", "Fastify", "WebGPU", "glTF", "Minimax", "NMEA", "PokéAPI"],
+		"de": ["Abdo", "Fastify", "WebGPU", "glTF", "Minimax", "NMEA", "PokéAPI"]
+	}
+}
