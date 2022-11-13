@@ -1,10 +1,13 @@
+use web_gpu_core::size::Size;
+
 pub mod first;
 pub mod orthographic;
 pub mod perspective;
 
-pub enum CameraType {
+pub enum Projection {
     Perspective,
     Orthographic,
+    Custom,
 }
 
 pub trait Object3D {
@@ -13,15 +16,13 @@ pub trait Object3D {
     }
 }
 
-pub struct AspectRatio(pub f64, pub f64);
-
 pub trait Camera: Object3D {
-    fn new(asptect_ratio: AspectRatio) -> Self;
+    fn new(size: Size) -> Self;
     fn up(&self) -> glam::Vec3 {
         glam::Vec3::Y
     }
 
-    fn camera_type(&self) -> CameraType;
+    fn camera_type(&self) -> Projection;
     fn zoom_factor(&self) -> f32;
     fn view_matrix(&self) -> glam::Mat4;
     fn projection_matrix(&self) -> glam::Mat4;

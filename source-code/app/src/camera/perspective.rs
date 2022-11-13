@@ -1,4 +1,4 @@
-use super::{Camera, CameraType, Object3D};
+use super::{Camera, Object3D, Projection};
 use web_gpu_core::size::Size;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -49,11 +49,11 @@ pub struct PerspectiveCamera {
 }
 
 impl PerspectiveCamera {
-    pub fn new(width: f32, height: f32) -> Self {
+    pub const fn new(width: f32, height: f32, aspect_ratio: f32) -> Self {
         Self {
-            projection_mat: glam::Mat4::default(),
+            projection_mat: glam::Mat4::IDENTITY,
             fov: 45.0_f32,
-            aspect_ratio: width / height,
+            aspect_ratio,
             z_near: 0.1,
             z_far: 100.0,
             eye: glam::vec3a(0.0, 0.0, 2.0),
@@ -64,6 +64,18 @@ impl PerspectiveCamera {
             film_offset: 0.0,
             view: None,
         }
+    }
+
+    pub fn with_size<T>(size: T) -> Self
+    where
+        T: Into<Size>,
+    {
+        let size: Size = size.into();
+        Self::new(
+            size.width as f32,
+            size.height as f32,
+            size.aspect_ratio() as f32,
+        )
     }
 }
 
@@ -91,8 +103,12 @@ impl PerspectiveCamera {
 impl Object3D for PerspectiveCamera {}
 
 impl Camera for PerspectiveCamera {
-    fn camera_type(&self) -> CameraType {
-        CameraType::Perspective
+    fn new(asptect_ratio: super::Size) -> Self {
+        todo!()
+    }
+
+    fn camera_type(&self) -> Projection {
+        Projection::Perspective
     }
 
     fn projection_matrix(&self) -> glam::Mat4 {
@@ -194,7 +210,7 @@ mod test {
 
     #[test]
     fn test_set_size() {
-        let mut p = PerspectiveCamera::new(10.0, 1.0);
+        let mut p = PerspectiveCamera::with_size((10.0, 1.0));
         p.set_size(Size::new(10.0, 10.0));
     }
 }

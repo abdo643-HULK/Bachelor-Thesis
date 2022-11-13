@@ -14,7 +14,7 @@ use wgpu::util::DeviceExt;
 use winit::{
     dpi::PhysicalSize,
     event::Event,
-    event_loop::{ControlFlow, EventLoop},
+    event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
     window::{Icon, Window, WindowBuilder},
 };
 
@@ -86,6 +86,7 @@ impl App {
     pub fn init(options: AppOptions) -> Self {
         // winit::event_loop::EventLoop::with_user_event();
         let event_loop = EventLoop::new();
+        event_loop.set_device_event_filter(winit::event_loop::DeviceEventFilter::Always);
         let primary_monitor = event_loop.primary_monitor().unwrap();
 
         let asset_server = match options.assets_root {

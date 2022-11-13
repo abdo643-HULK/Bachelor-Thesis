@@ -1,7 +1,21 @@
 {
+	"editor.inlayHints.enabled": "off",
 	"latex-workshop.latex.recipe.default": "pdflatex -> biber -> pdflatex*2",
 	"ltex.dictionary": {
 		"en": ["Abdo", "Fastify", "WebGPU", "glTF", "Minimax", "NMEA", "PokéAPI"],
 		"de": ["Abdo", "Fastify", "WebGPU", "glTF", "Minimax", "NMEA", "PokéAPI"]
-	}
+	},
+	"rust-analyzer.server.extraEnv": {
+		// "CHALK_OVERFLOW_DEPTH": "1000",
+		"RUSTUP_TOOLCHAIN": "stable"
+	},
+	"wgsl-analyzer.diagnostics.typeErrors": true,
+	"wgsl-analyzer.diagnostics.nagaParsing": false,
+	"wgsl-analyzer.diagnostics.nagaValidation": true,
+	"wgsl-analyzer.diagnostics.nagaVersion": "0.10",
+	"wgsl-analyzer.inlayHints.enabled": true,
+	"wgsl-analyzer.inlayHints.typeHints": true,
+	"wgsl-analyzer.inlayHints.parameterHints": true,
+	"wgsl-analyzer.inlayHints.structLayoutHints": false,
+	"wgsl-analyzer.inlayHints.typeVerbosity": "inner"
 }

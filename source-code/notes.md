@@ -7,26 +7,30 @@ https://news.ycombinator.com/item?id=14809096
 
 https://gamedev.stackexchange.com/questions/18418/state-of-the-art-in-image-compression
 
-# UE 5
+## UE 5
 
 https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UInputComponent/
 https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/GameFramework/UPlayerInput/
 
-# HLSL
+## HLSL
 
 https://github.com/microsoft/DirectXShaderCompiler
 
 now supports spir-v output can be used on native
 
-# WebGPU
+## glTF
+
+https://www.threekit.com/blog/gltf-vs-fbx-which-format-should-i-use#:~:text=Both%20are%20widely%20used%20and,differences%20that%20guide%20their%20applications.&text=At%20a%20high%20level%2C%20the,io%2C%20Maya%20or%203DS%20Max.
+
+## WebGPU
 
 -   NO GLOBAL STATE (OpenGL)
 
-## Concerns Web
+### Concerns Web
 
 -   [hidden crypto-mining, password cracking or rainbow tables computations](https://gpuweb.github.io/gpuweb/#security-abuse-of-capabilities)
 
-## Timelines
+### Timelines
 
 A computer system with a user agent at the front-end and GPU at the back-end has components working on different timelines in parallel
 
@@ -34,7 +38,7 @@ A computer system with a user agent at the front-end and GPU at the back-end has
 -   Device timeline
 -   Queue timeline
 
-# WGSL
+## WGSL
 
 -   shader is a little program
 -   3 entry points/stages (vertex, fragment, compute)
@@ -198,11 +202,11 @@ A computer system with a user agent at the front-end and GPU at the back-end has
 -   workgroupBarrier uses AcquireRelease memory semantics and WorkgroupMemory semantics.
 -   storageBarrier uses AcquireRelease memory semantics and UniformMemory semantics.
 
-## Fragment Shaders
+### Fragment Shaders
 
 -   Fragment shader invocations operating on neighbouring fragments (in screen-space coordinates) collaborate to compute approximate partial derivatives. These neighbouring fragments are referred to as a quad.
 
-### partial derivative:
+#### partial derivative:
 
 the rate of change of a value along an axis.
 
@@ -215,7 +219,7 @@ the rate of change of a value along an axis.
     -   dpdy, dpdyCoarse, and dpdyFine compute partial derivatives along the y axis.
     -   fwidth, fwidthCoarse, and fwidthFine compute the Manhattan metric over the associated x and y partial derivatives.
 
-## Compute Shaders
+### Compute Shaders
 
 -   share access to shader variable in workgroup address space
 -   workgroup grid:
@@ -237,9 +241,9 @@ the rate of change of a value along an axis.
 
 -   control barrier: excutes everthing in working group as if it were executed concurrently
 
-## Built-in
+### Built-in
 
-### Built-in Values
+#### Built-in Values
 
 | Name                   | Stage    | Input or Output | Type        |
 | ---------------------- | -------- | --------------- | ----------- |

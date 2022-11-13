@@ -1,0 +1,11 @@
+[package]
+name = "web-gpu-asset"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+
+[dependencies.image]
+version = "0.24"
+default-features = false
+features = ["png", "jpeg"]

@@ -1,6 +1,6 @@
 [build]
-target = ["x86_64-pc-windows-msvc","wasm32-unknown-unknown"]
-# target = ["x86_64-apple-darwin", "aarch64-apple-darwin", "wasm32-unknown-unknown"]
+# target = ["x86_64-pc-windows-msvc","wasm32-unknown-unknown"]
+target = ["x86_64-apple-darwin", "aarch64-apple-darwin", "wasm32-unknown-unknown"]
 # target = ["x86_64-apple-darwin"]
 
 [target.wasm32-unknown-unknown]

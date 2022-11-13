@@ -1,0 +1,4 @@
+[package]
+name = "web-gpu-animation"
+version.workspace = true
+edition.workspace = true

@@ -1,10 +1,11 @@
 use derivative::Derivative;
 use glam::Vec3;
+use web_gpu_core::size::Size;
 use winit::{dpi::PhysicalPosition, event::ModifiersState};
 
 use crate::camera::{
-    self, orthographic::OrthographicCamera, perspective::PerspectiveCamera, AspectRatio, Camera,
-    CameraType, Object3D,
+    self, orthographic::OrthographicCamera, perspective::PerspectiveCamera, Camera, Object3D,
+    Projection,
 };
 
 use std::{f32, fmt::Debug, sync::Arc};
@@ -241,7 +242,11 @@ pub enum Cam<T: camera::Camera> {
 impl<T: camera::Camera> Object3D for Cam<T> {}
 
 impl<T: camera::Camera> camera::Camera for Cam<T> {
-    fn camera_type(&self) -> CameraType {
+    fn new(size: Size) -> Self {
+        todo!()
+    }
+
+    fn camera_type(&self) -> Projection {
         match self {
             Cam::Perspective(camera) => camera.camera_type(),
             Cam::Orthographic(camera) => camera.camera_type(),
@@ -808,7 +813,9 @@ impl<T: camera::Camera> Controls for OrbitControls<T> {
 
 impl<T: camera::Camera> Default for OrbitControls<T> {
     fn default() -> Self {
-        let camera = T::new(AspectRatio(1920.0, 1080.0));
+        // let camera = T::new(AspectRatio(1920.0, 1080.0));
+        let camera = PerspectiveCamera::with_size(Size::new(1920.0, 1080.0));
+
         let position = (*camera.position()).into();
         let zoom_factor = camera.zoom_factor();
         let target = glam::Vec3A::ZERO;
@@ -1053,8 +1060,7 @@ mod test {
             let target = glam::Vec3A::new(1.0, 0.0, 0.4);
 
             let distance = position.distance(target);
-            println!("{distance}");
-
+            log::info!("{distance}");
             assert_eq!(distance, 1.469693845669907);
         }
     }
