@@ -7,6 +7,13 @@ https://news.ycombinator.com/item?id=14809096
 
 https://gamedev.stackexchange.com/questions/18418/state-of-the-art-in-image-compression
 
+| Vulkan          | DirectX 12                | WebGPU            |
+| --------------- | ------------------------- | ----------------- |
+| Uniform Buffer  | Constant Buffer           | Uniform Buffer    |
+| VkCommandBuffer | ID3D12GraphicsCommandList | GPUCommandEncoder |
+| PipelineLayout  | ID3D12RootSignature       | GPUPipelineLayout |
+| VkPipeline      | ID3D12PipelineState       | GPURenderPipeline |
+
 ## UE 5
 
 https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UInputComponent/
@@ -24,222 +31,222 @@ https://www.threekit.com/blog/gltf-vs-fbx-which-format-should-i-use#:~:text=Both
 
 ## WebGPU
 
--   NO GLOBAL STATE (OpenGL)
+- NO GLOBAL STATE (OpenGL)
 
 ### Concerns Web
 
--   [hidden crypto-mining, password cracking or rainbow tables computations](https://gpuweb.github.io/gpuweb/#security-abuse-of-capabilities)
+- [hidden crypto-mining, password cracking or rainbow tables computations](https://gpuweb.github.io/gpuweb/#security-abuse-of-capabilities)
 
 ### Timelines
 
 A computer system with a user agent at the front-end and GPU at the back-end has components working on different timelines in parallel
 
--   Content timeline
--   Device timeline
--   Queue timeline
+- Content timeline
+- Device timeline
+- Queue timeline
 
 ## WGSL
 
--   shader is a little program
--   3 entry points/stages (vertex, fragment, compute)
--   2 controllable Pipleines :
-    -   GPUComputePipeline
-    -   GPURenderPipeline
--   vertex stage must always return `@builtin(position)` either directly or as a property on a struct
--   fragment stage must always get an input with `@builtin(position)`
--   compute doesn't have a return type
--   No manual Memory Duaration
--   Address spaces
-    -   function (function scope)
-    -   private (module scope)
-    -   workgroup (module scope)
-    -   storage (module scope)
-    -   uniform (module scope)
-    -   handle (module scope)
--   No Recursion
--   resources:
-    -   shared between all shader invocations
-    -   4 types:
-        -   uniform buffers
-        -   storage buffers
-        -   textures
-        -   samplers
-    -   must have `@group(N) @binding(M)` attributes
--   alised memory views (ownership)
+- shader is a little program
+- 3 entry points/stages (vertex, fragment, compute)
+- 2 controllable Pipelines :
+  - GPUComputePipeline
+  - GPURenderPipeline
+- vertex stage must always return `@builtin(position)` either directly or as a property on a struct
+- fragment stage must always get an input with `@builtin(position)`
+- compute doesn't have a return type
+- No manual Memory Duration
+- Address spaces
+  - function (function scope)
+  - private (module scope)
+  - workgroup (module scope)
+  - storage (module scope)
+  - uniform (module scope)
+  - handle (module scope)
+- No Recursion
+- resources:
+  - shared between all shader invocations
+  - 4 types:
+    - uniform buffers
+    - storage buffers
+    - textures
+    - samplers
+  - must have `@group(N) @binding(M)` attributes
+- aliased memory views (ownership)
+
+  ```rust
+  var x : i32 = 0;
+
+  fn foo() {
+      bar(&x, &x); // Both p and q parameters are aliases of x.
+  }
+
+  // This function produces a dynamic error because of the aliased
+  // memory accesses.
+  fn bar(p : ptr<private, i32>, q : ptr<private, i32>) {
+      if (x == 0) { // not allowed to use x
+          *p = 1;
+      } else {
+          *q = 2;
+      }
+  }
+  ```
+
+- extensions are possible
+  - proposal to add [RayTracing](https://github.com/gpuweb/gpuweb/issues/535)
+  - To enable extension use: enable directive
+    ```rust
+    // Enable a hypothetical extension for arbitrary precision floating point types.
+    enable aribtrary_precision_float;
+    enable arbitrary_precision_float; // A redundant enable directive is ok.
+    ```
+- Workgroup:
+
+  - Current Issue:
+    ```
+    Can we query upper bounds on workgroup size dimensions? Is it independent of the shader, or a property to be queried after creating the shader module?
+    ```
+  - Example:
 
     ```rust
-    var x : i32 = 0;
+    @compute @workgroup_size(8,4,1)
+    fn sorter() { }
 
-    fn foo() {
-        bar(&x, &x); // Both p and q parameters are aliases of x.
-    }
+    @compute @workgroup_size(8u)
+    fn reverser() { }
 
-    // This function produces a dynamic error because of the aliased
-    // memory accesses.
-    fn bar(p : ptr<private, i32>, q : ptr<private, i32>) {
-        if (x == 0) { // not allowed to use x
-            *p = 1;
-        } else {
-            *q = 2;
-        }
-    }
+    // Using an pipeline-overridable constant.
+    @id(42) override block_width = 12u;
+    @compute @workgroup_size(block_width)
+    fn shuffler() { }
+
+    // Error: workgroup_size must be specified on compute shader
+    @compute
+    fn bad_shader() { }
     ```
 
--   extensions are possible
-    -   proposal to add [RayTracing](https://github.com/gpuweb/gpuweb/issues/535)
-    -   To enable extension use: enable directive
-        ```rust
-        // Enable a hypothetical extension for arbitrary precision floating point types.
-        enable aribtrary_precision_float;
-        enable arbitrary_precision_float; // A redundant enable directive is ok.
-        ```
--   Workgroup:
+- User defined Input and Output (which are shared between, shaders/stages) need a location or built-in attribute. That's why a struct, that is returned from a shader, always needs all its members to have a location or built-in.
 
-    -   Current Issue:
-        ```
-        Can we query upper bounds on workgroup size dimensions? Is it independent of the shader, or a property to be queried after creating the shader module?
-        ```
-    -   Example:
+  - A location can only store up to 16 bytes (max: vec4)
 
-        ```rust
-        @compute @workgroup_size(8,4,1)
-        fn sorter() { }
+  ```rust
+  struct A {
+      @location(0) x: f32,
+      // Despite locations being 16-bytes, x and y cannot share a location
+      @location(1) y: f32
+  }
 
-        @compute @workgroup_size(8u)
-        fn reverser() { }
+  // in1 occupies locations 0 and 1.
+  // in2 occupies location 2.
+  // The return value occupies location 0.
+  @fragment
+  fn fragShader(in1: A, @location(2) in2: f32) -> @location(0) vec4<f32> {
+  // ...
+  }
+  ```
 
-        // Using an pipeline-overridable constant.
-        @id(42) override block_width = 12u;
-        @compute @workgroup_size(block_width)
-        fn shuffler() { }
+  ```rust
+  // Mixed builtins and user-defined inputs.
+  struct MyInputs {
+      @location(0) x: vec4<f32>,
+      @builtin(front_facing) y: bool,
+      @location(1) @interpolate(flat) z: u32
+  }
 
-        // Error: workgroup_size must be specified on compute shader
-        @compute
-        fn bad_shader() { }
-        ```
+  struct MyOutputs {
+      @builtin(frag_depth) x: f32,
+      @location(0) y: vec4<f32>
+  }
 
--   User defined Input and Output (which are shared between, shaders/stages) need a location or builtin attribute. That's why a struct, that is returned from a shader, always needs all it's members to have a location or builtin.
+  @fragment
+  fn fragShader(in1: MyInputs) -> MyOutputs {
+  // ...
+  }
+  ```
 
-    -   A location can only store up to 16 bytes (max: vec4)
+  ```rust
+  struct A {
+      @location(0) x: f32,
+      // Invalid, x and y cannot share a location.
+      @location(0) y: f32
+  }
 
-    ```rust
-    struct A {
-        @location(0) x: f32,
-        // Despite locations being 16-bytes, x and y cannot share a location
-        @location(1) y: f32
-    }
+  struct B {
+      @location(0) x: f32
+  }
 
-    // in1 occupies locations 0 and 1.
-    // in2 occupies location 2.
-    // The return value occupies location 0.
-    @fragment
-    fn fragShader(in1: A, @location(2) in2: f32) -> @location(0) vec4<f32> {
-    // ...
-    }
-    ```
+  struct C {
+      // Invalid, structures with user-defined IO cannot be nested.
+      b: B
+  }
 
-    ```rust
-    // Mixed builtins and user-defined inputs.
-    struct MyInputs {
-        @location(0) x: vec4<f32>,
-        @builtin(front_facing) y: bool,
-        @location(1) @interpolate(flat) z: u32
-    }
+  struct D {
+      x: vec4<f32>
+  }
 
-    struct MyOutputs {
-        @builtin(frag_depth) x: f32,
-        @location(0) y: vec4<f32>
-    }
+  @fragment
+  // Invalid, location cannot be applied to a structure type.
+  fn fragShader1(@location(0) in1: D) {
+  // ...
+  }
 
-    @fragment
-    fn fragShader(in1: MyInputs) -> MyOutputs {
-    // ...
-    }
-    ```
+  @fragment
+  // Invalid, in1 and in2 cannot share a location.
+  fn fragShader2(@location(0) in1: f32, @location(0) in2: f32) {
+  // ...
+  }
 
-    ```rust
-    struct A {
-        @location(0) x: f32,
-        // Invalid, x and y cannot share a location.
-        @location(0) y: f32
-    }
+  @fragment
+  // Invalid, location cannot be applied to a structure.
+  fn fragShader3(@location(0) in1: vec4<f32>) -> @location(0) D {
+  // ...
+  }
+  ```
 
-    struct B {
-        @location(0) x: f32
-    }
-
-    struct C {
-        // Invalid, structures with user-defined IO cannot be nested.
-        b: B
-    }
-
-    struct D {
-        x: vec4<f32>
-    }
-
-    @fragment
-    // Invalid, location cannot be applied to a structure type.
-    fn fragShader1(@location(0) in1: D) {
-    // ...
-    }
-
-    @fragment
-    // Invalid, in1 and in2 cannot share a location.
-    fn fragShader2(@location(0) in1: f32, @location(0) in2: f32) {
-    // ...
-    }
-
-    @fragment
-    // Invalid, location cannot be applied to a structure.
-    fn fragShader3(@location(0) in1: vec4<f32>) -> @location(0) D {
-    // ...
-    }
-    ```
-
--   u32 can represent 4294967295 but f32 convertion to u32 can only represent 4294967040
--   Memory Model follows Vulkan Memory Model
--   Atomics built-in functions ordering is relaxed. [more](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#memory-model-memory-semantics)
--   workgroupBarrier uses AcquireRelease memory semantics and WorkgroupMemory semantics.
--   storageBarrier uses AcquireRelease memory semantics and UniformMemory semantics.
+- u32 can represent 4294967295 but f32 conversion to u32 can only represent 4294967040
+- Memory Model follows Vulkan Memory Model
+- Atomics built-in functions ordering is relaxed. [more](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#memory-model-memory-semantics)
+- workgroupBarrier uses AcquireRelease memory semantics and WorkgroupMemory semantics.
+- storageBarrier uses AcquireRelease memory semantics and UniformMemory semantics.
 
 ### Fragment Shaders
 
--   Fragment shader invocations operating on neighbouring fragments (in screen-space coordinates) collaborate to compute approximate partial derivatives. These neighbouring fragments are referred to as a quad.
+- Fragment shader invocations operating on neighbouring fragments (in screen-space coordinates) collaborate to compute approximate partial derivatives. These neighbouring fragments are referred to as a quad.
 
-#### partial derivative:
+#### Partial derivative:
 
-the rate of change of a value along an axis.
+The rate of change of a value along an axis.
 
--   implicit in functions:
-    -   textureSample
-    -   textureSampleBias
-    -   textureSampleCompare.
--   explicit in functions:
-    -   dpdx, dpdxCoarse, and dpdxFine compute partial derivatives along the x axis.
-    -   dpdy, dpdyCoarse, and dpdyFine compute partial derivatives along the y axis.
-    -   fwidth, fwidthCoarse, and fwidthFine compute the Manhattan metric over the associated x and y partial derivatives.
+- Implicit in functions:
+  - textureSample
+  - textureSampleBias
+  - textureSampleCompare.
+- Explicit in functions:
+  - dpdx, dpdxCoarse, and dpdxFine compute partial derivatives along the x axis.
+  - dpdy, dpdyCoarse, and dpdyFine compute partial derivatives along the y axis.
+  - fwidth, fwidthCoarse, and fwidthFine compute the Manhattan metric over the associated x and y partial derivatives.
 
 ### Compute Shaders
 
--   share access to shader variable in workgroup address space
--   workgroup grid:
-    -   0 ≤ i < workgroup_size_x
-    -   0 ≤ j < workgroup_size_y
-    -   0 ≤ k < workgroup_size_z
--   each invocation gets a 'local invocation ID'
+- share access to shader variable in workgroup address space
+- workgroup grid:
+  - 0 ≤ i < workgroup_size_x
+  - 0 ≤ j < workgroup_size_y
+  - 0 ≤ k < workgroup_size_z
+- each invocation gets a 'local invocation ID'
 
-    -   index calculates as following:
-        ```
-        local_invocation_index = i + (j * workgroup_size_x) + (k * workgroup_size_x * workgroup_size_y)
-        ```
+  - index calculates as following:
+    ```
+    local_invocation_index = i + (j * workgroup_size_x) + (k * workgroup_size_x * workgroup_size_y)
+    ```
 
--   shader grid:
+- shader grid:
 
-    -   0 ≤ CSi < workgroup_size_x × group_count_x
-    -   0 ≤ CSj < workgroup_size_y × group_count_y
-    -   0 ≤ CSk < workgroup_size_z × group_count_z
+  - 0 ≤ CSi < workgroup_size_x × group_count_x
+  - 0 ≤ CSj < workgroup_size_y × group_count_y
+  - 0 ≤ CSk < workgroup_size_z × group_count_z
 
--   control barrier: excutes everthing in working group as if it were executed concurrently
+- control barrier: executes everything in working group as if it were executed concurrently
 
 ### Built-in
 
@@ -298,21 +305,21 @@ Example:
 
 ### Built-in Functions
 
--   [Logical Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#logical-builtin-functions)
--   [Array Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#array-builtin-functions)
--   [Float Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#float-builtin-functions)
--   [Integer Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#integer-builtin-functions)
--   [Matrix Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#matrix-builtin-functions)
--   [Vector Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#vector-builtin-functions)
--   [Derivative Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#derivative-builtin-functions)
-    -   Must only be used in a fragment shader stage.
-    -   Must only be invoked in uniform control flow.
--   [Texture Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#texture-builtin-functions)
--   [Atomic Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#atomic-builtin-functions)
-    -   Atomic built-in functions must not be used in a vertex shader stage.
-    -   The address space SC of the atomic_ptr parameter in all atomic built-in functions must be either storage or workgroup.
--   [Data Packing Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#pack-builtin-functions)
--   [Data Unpacking Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#unpack-builtin-functions)
--   [Synchronization Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#sync-builtin-functions)
-    -   All synchronization functions execute a control barrier with Acquire/Release memory ordering.
-    -   All synchronization functions must only be used in the compute shader stage.
+- [Logical Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#logical-builtin-functions)
+- [Array Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#array-builtin-functions)
+- [Float Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#float-builtin-functions)
+- [Integer Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#integer-builtin-functions)
+- [Matrix Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#matrix-builtin-functions)
+- [Vector Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#vector-builtin-functions)
+- [Derivative Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#derivative-builtin-functions)
+  - Must only be used in a fragment shader stage.
+  - Must only be invoked in uniform control flow.
+- [Texture Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#texture-builtin-functions)
+- [Atomic Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#atomic-builtin-functions)
+  - Atomic built-in functions must not be used in a vertex shader stage.
+  - The address space SC of the atomic_ptr parameter in all atomic built-in functions must be either storage or workgroup.
+- [Data Packing Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#pack-builtin-functions)
+- [Data Unpacking Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#unpack-builtin-functions)
+- [Synchronization Built-in Functions](https://gpuweb.github.io/gpuweb/wgsl/#sync-builtin-functions)
+  - All synchronization functions execute a control barrier with Acquire/Release memory ordering.
+  - All synchronization functions must only be used in the compute shader stage.

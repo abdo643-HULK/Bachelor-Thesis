@@ -1,2 +1,6 @@
 use_field_init_shorthand = true
 newline_style = "Unix"
+chain_width = 80
+edition = "2021"
+hard_tabs = true
+match_block_trailing_comma = true

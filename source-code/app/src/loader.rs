@@ -97,7 +97,7 @@ impl Texture {
         device.create_texture(&desc);
         device.create_sampler(&wgpu::SamplerDescriptor {
             ..Default::default()
-        })
+        });
     }
 }
 
