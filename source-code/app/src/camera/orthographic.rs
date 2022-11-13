@@ -1,4 +1,4 @@
-use super::{Camera, CameraType, Object3D};
+use super::{Camera, Object3D, Projection};
 
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
 pub struct OrthographicCamera {
@@ -22,11 +22,22 @@ impl OrthographicCamera {
     }
 }
 
+impl OrthographicCamera {
+    fn update_view_proj(&mut self) {
+        glam::DAffine3;
+        glam::Affine3A;
+    }
+}
+
 impl Object3D for OrthographicCamera {}
 
 impl Camera for OrthographicCamera {
-    fn camera_type(&self) -> CameraType {
-        CameraType::Orthographic
+    fn new(asptect_ratio: super::Size) -> Self {
+        todo!()
+    }
+
+    fn camera_type(&self) -> Projection {
+        Projection::Orthographic
     }
 
     fn projection_matrix(&self) -> glam::Mat4 {

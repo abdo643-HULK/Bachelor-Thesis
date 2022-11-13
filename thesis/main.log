@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.16)  1 NOV 2022 19:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.16)  9 NOV 2022 09:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -240,7 +240,7 @@ File: pgfcalendar.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 
 Package hagenberg-thesis Warning: 
 **************************************************************** 
-NOTE: 'hagenberg-thesis' is 495 days old - pls. check for updates 
+NOTE: 'hagenberg-thesis' is 503 days old - pls. check for updates 
 at https://github.com/Digital-Media/HagenbergThesis 
 **************************************************************** 
  on input line 100.
@@ -1300,7 +1300,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
  (/usr/local/texlive/2022basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<images//logo.pdf, id=217, 269.93045pt x 269.93045pt>
+<images//logo.pdf, id=241, 269.93045pt x 269.93045pt>
 File: images//logo.pdf Graphic file (type pdf)
 <use images//logo.pdf>
 Package pdftex.def Info: images//logo.pdf  used on input line 50.
@@ -1333,24 +1333,24 @@ Package tocbasic Info: Using my definition of `\numberline' on input line 12.
 Package tocbasic Info: Using my definition of `\numberline' on input line 16.
 Package tocbasic Info: Using my definition of `\numberline' on input line 22.
 Package tocbasic Info: Using my definition of `\numberline' on input line 30.
-Package tocbasic Info: Using my definition of `\numberline' on input line 33.
-Package tocbasic Info: Using my definition of `\numberline' on input line 36.
 [5
 
 ]
-Package tocbasic Info: Using my definition of `\numberline' on input line 39.
-Package tocbasic Info: Using my definition of `\numberline' on input line 42.
+Package tocbasic Info: Using my definition of `\numberline' on input line 40.
 Package tocbasic Info: Using my definition of `\numberline' on input line 43.
-Package tocbasic Info: Using my definition of `\numberline' on input line 44.
-Package tocbasic Info: Using my definition of `\numberline' on input line 45.
 Package tocbasic Info: Using my definition of `\numberline' on input line 46.
-Package tocbasic Info: Using my definition of `\numberline' on input line 47.
-Package tocbasic Info: Using my definition of `\numberline' on input line 48.
 Package tocbasic Info: Using my definition of `\numberline' on input line 49.
 Package tocbasic Info: Using my definition of `\numberline' on input line 50.
+Package tocbasic Info: Using my definition of `\numberline' on input line 51.
+Package tocbasic Info: Using my definition of `\numberline' on input line 52.
+Package tocbasic Info: Using my definition of `\numberline' on input line 53.
+Package tocbasic Info: Using my definition of `\numberline' on input line 54.
+Package tocbasic Info: Using my definition of `\numberline' on input line 55.
+Package tocbasic Info: Using my definition of `\numberline' on input line 56.
 Package tocbasic Info: Using my definition of `\numberline' on input line 57.
-Package tocbasic Info: Using my definition of `\numberline' on input line 58.
-Package tocbasic Info: Using my definition of `\numberline' on input line 59.
+Package tocbasic Info: Using my definition of `\numberline' on input line 64.
+Package tocbasic Info: Using my definition of `\numberline' on input line 65.
+Package tocbasic Info: Using my definition of `\numberline' on input line 66.
 )
 \tf@toc=\write6
 \openout6 = `main.toc'.
@@ -1538,24 +1538,24 @@ LaTeX Font Info:    External font `cmex7' loaded for size
 
 ] (./main.aux (./front/preface.aux) (./front/abstract.aux) (./front/kurzfassung.aux) (./chapters/thethesis.aux) (./chapters/latex.aux) (./chapters/figures.aux) (./chapters/mathematics.aux) (./chapters/literature.aux) (./chapters/printing.aux) (./chapters/closing.aux) (./back/appendix_a.aux) (./back/appendix_b.aux) (./back/appendix_c.aux) (./back/appendix_d.aux) (./back/printbox.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 80404950B48A6DACADE894CCFC7E7D10;6114.
+(rerunfilecheck)             Checksum: CEDF38B70E83A19B6C56CAD02560D2F5;6664.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41903 strings out of 478040
- 813594 string characters out of 5836626
- 1661792 words of memory out of 5000000
- 59288 multiletter control sequences out of 15000+600000
+ 41920 strings out of 478040
+ 813883 string characters out of 5836626
+ 1661795 words of memory out of 5000000
+ 59299 multiletter control sequences out of 15000+600000
  538487 words of font info for 76 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  130i,12n,145p,563b,2457s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022basic/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022basic/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022basic/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmss12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
-Output written on main.pdf (29 pages, 279482 bytes).
+Output written on main.pdf (29 pages, 280538 bytes).
 PDF statistics:
- 485 PDF objects out of 1000 (max. 8388607)
- 428 compressed objects within 5 object streams
- 82 named destinations out of 1000 (max. 500000)
- 446 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 516 PDF objects out of 1000 (max. 8388607)
+ 459 compressed objects within 5 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 494 words of extra memory for PDF output out of 10000 (max. 10000000)
 

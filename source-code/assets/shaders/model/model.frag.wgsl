@@ -5,12 +5,12 @@ struct Camera {
 };
 
 struct VertexOutput {
-	[[builtin(position)]] position: vec4<f32>;
-	[[location(0)]] normal: vec3<f32>;
-	[[location(1)]] world_pos: vec3<f32>;
+	@builtin(position) position: vec4<f32>;
+	@location(0) normal: vec3<f32>;
+	@location(1) world_pos: vec3<f32>;
 };
 
-[[group(0), binding(1)]] 
+@group(0) @binding(1) 
 var<uniform> camera: Camera;
 
 fn linearSample(texture: texture_2d<f32>, tex_sampler: sampler, uv: vec2<f32>) -> vec4<f32> {
@@ -60,8 +60,8 @@ fn brdf(color: vec3<f32>, metallic: f32, roughness: f32, l: vec3<f32>, v: vec3<f
     return ndotl * (diffuse + specular) * 2.0 + color * 0.1;
 }
 
-[[stage(fragment)]]
-fn main(in: VertexOutput) -> [[location(0)]] vec4<f32> {
+@fragment
+fn main(in: VertexOutput) -> @location(0) vec4<f32> {
     let light_direction = normalize(vec3<f32>(2.0, 4.0, 3.0));
 
     let color = vec4<f32>(1.0, 1.0, 1.0, 1.0);

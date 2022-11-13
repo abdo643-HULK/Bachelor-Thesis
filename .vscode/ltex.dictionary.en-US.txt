@@ -6,3 +6,7 @@ GNM
 GNMX
 RW
 Atomics
+spir-v
+glTF
+DXIL
+SPIR-V

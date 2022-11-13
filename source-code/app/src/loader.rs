@@ -28,6 +28,18 @@ pub enum GltfError {
     UnsupportedPrimitive(Mode),
 }
 
+bitflags::bitflags! {
+    struct SampleCount: u32 {
+        const BIT_1 = 0x00000001;
+        const BIT_2 = 0x00000002;
+        const BIT_4 = 0x00000004;
+        const BIT_8 = 0x00000008;
+        const BIT_16 = 0x00000010;
+        const BIT_32 = 0x00000020;
+        const BIT_64 = 0x00000040;
+    }
+}
+
 pub struct Model {
     pub meshes: Vec<Primitive>,
     pub materials: Vec<Material>,
@@ -43,6 +55,50 @@ pub struct Texture {
     pub texture: wgpu::Texture,
     pub view: wgpu::TextureView,
     pub sampler: wgpu::Sampler,
+}
+
+impl Texture {
+    const fn new(device: &wgpu::Device, texsize: (u32, u32)) {
+        // Vulkan: VkImageCreateInfo
+        let desc = wgpu::TextureDescriptor {
+            label: todo!(),
+            // VK_FORMAT_R8G8B8A8_SRGB
+            format: wgpu::TextureFormat::Rgba8UnormSrgb,
+            // VkExtent3D
+            size: wgpu::Extent3d {
+                width: texsize.0,
+                height: texsize.1,
+                depth_or_array_layers: 1,
+            },
+            mip_level_count: 1,
+            // VkSampleCountFlagBits
+            sample_count: SampleCount::BIT_1.bits,
+            // VkImageType::VK_IMAGE_TYPE_2D
+            dimension: wgpu::TextureDimension::D2,
+            // VkImageUsageFlagBits::VK_IMAGE_USAGE_TRANSFER_DST_BIT | VkImageUsageFlagBits::VK_IMAGE_USAGE_SAMPLED_BIT,
+            usage: wgpu::TextureUsages::COPY_DST | wgpu::TextureUsages::TEXTURE_BINDING,
+        };
+
+        device.create_buffer(&wgpu::BufferDescriptor {
+            label: todo!(),
+            size: todo!(),
+            // VkBufferUsageFlagBits
+            usage: wgpu::BufferUsages::COPY_SRC,
+            mapped_at_creation: todo!(),
+        });
+
+        // device.create_buffer_init(wgpu::util::BufferInitDescriptor {
+        //     label: todo!(),
+        //     contents: todo!(),
+        //     // VkBufferUsageFlagBits
+        //     usage: wgpu::BufferUsages::COPY_SRC,
+        // })
+
+        device.create_texture(&desc);
+        device.create_sampler(&wgpu::SamplerDescriptor {
+            ..Default::default()
+        })
+    }
 }
 
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd, Eq, Ord)]

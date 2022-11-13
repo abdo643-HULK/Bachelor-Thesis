@@ -6,12 +6,18 @@ pub struct Size {
     pub height: f64,
 }
 
+pub type AspectRatio = f64;
+
 impl Size {
     pub const ZERO: Size = Self::new(0.0, 0.0);
 
     #[inline]
     pub const fn new(width: f64, height: f64) -> Self {
         Self { width, height }
+    }
+
+    pub fn aspect_ratio(&self) -> AspectRatio {
+        self.width / self.height
     }
 }
 

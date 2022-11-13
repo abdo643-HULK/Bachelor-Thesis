@@ -8,3 +8,7 @@
 *.ilg
 *.fdb_latexmk
 *.blg
+*.out
+*.bbl
+*.bcf
+*.blg
