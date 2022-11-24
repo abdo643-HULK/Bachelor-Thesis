@@ -6,6 +6,6 @@ struct VertexOutput {
 @fragment
 fn main(
     in: VertexOutput
-) -> [[location(0)]] vec4<f32> {
+) -> @location(0) vec4<f32> {
     return in.color;
 }

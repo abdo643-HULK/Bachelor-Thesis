@@ -9,6 +9,7 @@
 		// "CHALK_OVERFLOW_DEPTH": "1000",
 		"RUSTUP_TOOLCHAIN": "stable"
 	},
+	"lldb.launch.terminal": "integrated",
 	"wgsl-analyzer.diagnostics.typeErrors": true,
 	"wgsl-analyzer.diagnostics.nagaParsing": false,
 	"wgsl-analyzer.diagnostics.nagaValidation": true,

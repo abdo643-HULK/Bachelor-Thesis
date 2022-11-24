@@ -1,5 +1,5 @@
 [package]
-name = "web-gpu-asset"
+name = "saga-asset"
 version.workspace = true
 edition.workspace = true
 

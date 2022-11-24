@@ -1,0 +1,102 @@
+# API similarities & differences
+
+https://twitter.com/dakangz/status/1311330527190962178?lang=en
+https://webgpufundamentals.org/webgpu/lessons/webgpu-from-webgl.html
+https://www.khronos.org/assets/uploads/developers/presentations/Intro-to-WebGPU_May21.pdf
+
+https://github.com/gpuweb/gpuweb/pull/1352/files
+
+https://github.com/gpuweb/gpuweb/blob/main/design/Pipelines.md
+
+## Double Buffering
+
+- Vulkan: Manual
+- DirectX: Manual
+- WebGL: Implemented in Canvas
+- WebGPU: Implemented in [Canvas/Surface](https://gpuweb.github.io/gpuweb/explainer/#canvas-output-swap-chains)
+
+| Vulkan                                                  | DirectX 12                | WebGPU              |
+| ------------------------------------------------------- | ------------------------- | ------------------- |
+| Uniform Buffer                                          | Constant Buffer           | Uniform Buffer      |
+| `vk::CommandBuffer`                                     | ID3D12GraphicsCommandList | `GPUCommandEncoder` |
+| `vk::PipelineLayout`                                    | ID3D12RootSignature       | `GPUPipelineLayout` |
+| `vk::Pipeline`                                          | ID3D12PipelineState       | `GPURenderPipeline` |
+| Can set stencil reference for front and back separately | Sets once for both        | like DirectX        |
+
+## Swap-Chain
+
+WebGPU: built-in the surface
+
+## Framebuffer
+
+WebGPU: Are passed to each attachment on the rederpass as a view
+Vulkan: Framebuffers are created from a given renderpass, and they act as link between the attachments of the renderpass and the real images that they should render to
+
+## Presentmode
+
+Vulkan: vk::PresentModeKHR
+
+## TextureDescriptor
+
+Vulkan: `vk::ImageCreateInfo`
+
+| WebGPU                       | Vulkan                   |
+| ---------------------------- | ------------------------ |
+| -                            | `ImageCreateFlags` flags |
+| `Extent3d` size              | `Extent3D`               |
+| `u32` mip_level_count        | ``                       |
+| `u32` sample_count           | ``                       |
+| `TextureDimension` dimension | `ImageType` imageType    |
+| `TextureFormat` format       | `` format                |
+| `TextureUsages` usage        | ``                       |
+
+## TextureUsages
+
+Vulkan: `vk::ImageCreateFlags`
+
+| WebGPU              | Vulkan                    |
+| ------------------- | ------------------------- |
+| `COPY_SRC`          | `eTransferSrc`            |
+| `COPY_DST`          | `eTransferDst`            |
+| `TEXTURE_BINDING`   | `eSampled`                |
+| `STORAGE_BINDING`   | `eStorage`                |
+| `RENDER_ATTACHMENT` | `eColorAttachment`        |
+| `RENDER_ATTACHMENT` | `eDepthStencilAttachment` |
+| -                   | `eTransientAttachment`    |
+| -                   | `eInputAttachment`        |
+
+## TextureViewDescriptor
+
+Vulkan: `vk::ImageViewCreateInfo`
+
+| WebGPU                                               | Vulkan                                       |
+| ---------------------------------------------------- | -------------------------------------------- |
+| -                                                    | `vk::ImageViewCreateFlags` flags             |
+| `Texture::create_view(&self, TextureViewDescriptor)` | `vk::Image` image                            |
+| `Option<TextureViewDimension>` dimension             | `vk::ImageViewType` viewType                 |
+| `Option<TextureFormat>` format                       | `vk::Format` format                          |
+| -                                                    | `vk::ComponentMapping` components            |
+| [see](#vkimagesubresourcerange)                      | `vk::ImageSubresourceRange` subresourceRange |
+
+### vk::ImageSubresourceRange
+
+| TextureViewDescriptor                  | ImageSubresourceRange             |
+| -------------------------------------- | --------------------------------- |
+| `TextureAspect` aspect                 | `vk::ImageAspectFlags` aspectMask |
+| `u32` base_mip_level                   | `uint32_t` baseMipLevel           |
+| `Option<NonZeroU32>` mip_level_count   | `uint32_t` levelCount             |
+| `u32` base_array_layer                 | `uint32_t` baseArrayLayer         |
+| `Option<NonZeroU32>` array_layer_count | `uint32_t` layerCount             |
+
+## DepthStencilState
+
+Vulkan: vk::PipelineDepthStencilStateCreateInfo
+
+| WebGPU                                               | Vulkan                                       |
+| ---------------------------------------------------- | -------------------------------------------- |
+| -                                                    | `vk::ImageViewCreateFlags` flags             |
+| `Texture::create_view(&self, TextureViewDescriptor)` | `vk::Image` image                            |
+| `Option<TextureViewDimension>` dimension             | `vk::ImageViewType` viewType                 |
+| `Option<TextureFormat>` format                       | `vk::Format` format                          |
+| -                                                    | `vk::ComponentMapping` components            |
+| [see](#vkimagesubresourcerange)                      | `vk::ImageSubresourceRange` subresourceRange |

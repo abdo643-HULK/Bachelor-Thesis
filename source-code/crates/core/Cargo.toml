@@ -1,7 +1,7 @@
 [package]
-name = "web-gpu-core"
+name = "saga-core"
 version.workspace = true
 edition.workspace = true
 
 [dependencies]
-web-gpu-core-macros = { path = "macros", version = "0.1.0" }
+saga-core-macros = { path = "macros", version = "0.1.0" }

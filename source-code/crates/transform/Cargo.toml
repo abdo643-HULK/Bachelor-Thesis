@@ -1,5 +1,5 @@
 [package]
-name = "web-gpu-transform"
+name = "saga-transform"
 version.workspace = true
 edition.workspace = true
 

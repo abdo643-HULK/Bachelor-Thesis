@@ -1,16 +1,19 @@
--   https://paroj.github.io/gltut
--   https://graphics-programming.org/resources
--   https://gabrielgambetta.com/computer-graphics-from-scratch/
+https://app.gumroad.com/read/f256159eb8a7a7155b7949add3f889fc/I5EcZYvp809f676Iyf-9MA==
+https://github.com/samdauwe/webgpu-native-examples/blob/master/README.md
 
--   https://www.uni-marburg.de/en/fb12/research-groups/grafikmultimedia/lectures/graphics
--   https://www.mathematik.uni-marburg.de/~thormae/lectures/graphics1/graphics_1_1_eng_web.html#1
--   https://web.engr.oregonstate.edu/~mjb/vulkan/Handouts/FULL.1pp.pdf
+- https://paroj.github.io/gltut
+- https://graphics-programming.org/resources
+- https://gabrielgambetta.com/computer-graphics-from-scratch/
+
+- https://www.uni-marburg.de/en/fb12/research-groups/grafikmultimedia/lectures/graphics
+- https://www.mathematik.uni-marburg.de/~thormae/lectures/graphics1/graphics_1_1_eng_web.html#1
+- https://web.engr.oregonstate.edu/~mjb/vulkan/Handouts/FULL.1pp.pdf
 
 <!-- LLVM Supported targets -->
 
--   https://github.com/llvm/llvm-project/blob/main/llvm/include/llvm/ADT/Triple.h
+- https://github.com/llvm/llvm-project/blob/main/llvm/include/llvm/ADT/Triple.h
 
--   https://en.wikipedia.org/wiki/Uncanny_valley
+- https://en.wikipedia.org/wiki/Uncanny_valley
 
 Octree
 Sparse Voxel Octree Cone Tracing

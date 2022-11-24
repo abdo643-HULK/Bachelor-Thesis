@@ -1,9 +1,12 @@
-use std::{error::Error, io::BufReader};
+use std::{
+	error::Error,
+	io::{self, BufReader},
+};
 
 struct Gltf;
 
 impl Gltf {
-	pub fn load<R>(reader: R) -> Result<(), dyn Error>
+	pub fn load<R>(reader: R) -> Result<(), Box<dyn Error>>
 	where
 		R: io::Read + io::Seek,
 	{
@@ -30,7 +33,7 @@ impl Gltf {
 		let textures = futures::future::join_all(textures).await;
 	}
 
-	async fn load_texture(tex: gltf::Texture) {
+	async fn load_texture(tex: gltf::Texture<'_>) {
 		let sampler = tex.sampler();
 		let name = tex.name();
 		let image = tex.source();
@@ -41,15 +44,30 @@ impl Gltf {
 			gltf::image::Source::View { view, mime_type } => {
 				let start = view.offset();
 				let end = view.offset() + view.length();
-				view.buffer().index()
+				view.buffer().index();
 			},
 			gltf::image::Source::Uri { uri, mime_type } => todo!(),
 		}
 	}
 }
 
+enum Topology {
+	/// Corresponds to `PrimitiveTopology::PointList`.
+	Points = 1,
+	/// Corresponds to `PrimitiveTopology::LineList`.
+	Lines,
+	/// Corresponds to `PrimitiveTopology::LineStrip`.
+	// LineLoop,
+	/// Corresponds to `PrimitiveTopology::LineStrip`.
+	LineStrip,
+	/// Corresponds to `PrimitiveTopology::TriangleList`.
+	Triangles,
+	/// Corresponds to `PrimitiveTopology::TriangleStrip`.
+	TriangleStrip,
+	// Corresponds to `PrimitiveTopology::LineStrip`.
+	// TriangleFan,
+}
+
 struct Material {}
 
 struct ImageBuffer {}
-
-// struct Material {}

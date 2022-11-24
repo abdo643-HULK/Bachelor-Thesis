@@ -1,18 +1,35 @@
-On PC, you’d use BC7 (modern) or DXTC (old) formats.
-On mobile, you’d use ASTC (modern) or ETC (old) formats.
-
 https://blog.molecular-matters.com/2011/09/19/generic-type-safe-delegates-and-events-in-c/
 
 https://news.ycombinator.com/item?id=14809096
 
+https://github.com/kdashg/vulkan-portability/blob/master/pipeline-state.md
+
+https://github.com/gfx-rs/wgpu/issues/2447
+https://foundationsofgameenginedev.com
+
+## Crates I need to use
+
+[`sysinfo`](https://docs.rs/sysinfo/latest/sysinfo/): is a crate used to get a system’s information.
+[`kstring`](https://docs.rs/kstring/latest/kstring/): Key String: Optimized for map keys.
+[`nvml-wrapper`](https://docs.rs/nvml-wrapper/latest/nvml_wrapper/): For Nvidia GPUs Monitoring
+[`memoffset`](https://github.com/Gilnaa/memoffset): Similar to C `offsetof(type, member-designator)` for `#[repr(C)]`
+[`accesskit`](https://github.com/AccessKit/accesskit): Cross-platform A11y
+
+## Fundamentals of Computer Graphics
+
+4D coordinate space composed of three traditional geometric coordinates and a fourth _homogeneous_ coordinate that helps with **perspective viewing**
+
+## Compression
+
+### GPU Compression
+
+On PC, you’d use BC7 (modern) or DXTC (old) formats.
+On mobile, you’d use ASTC (modern) or ETC (old) formats.
 https://gamedev.stackexchange.com/questions/18418/state-of-the-art-in-image-compression
 
-| Vulkan          | DirectX 12                | WebGPU            |
-| --------------- | ------------------------- | ----------------- |
-| Uniform Buffer  | Constant Buffer           | Uniform Buffer    |
-| VkCommandBuffer | ID3D12GraphicsCommandList | GPUCommandEncoder |
-| PipelineLayout  | ID3D12RootSignature       | GPUPipelineLayout |
-| VkPipeline      | ID3D12PipelineState       | GPURenderPipeline |
+### Storage & Transmission Compression
+
+https://google.github.io/draco/
 
 ## UE 5
 

@@ -86,6 +86,9 @@ name = "arrayvec"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8da52d66c7071e2e3fa2a1e5c6d088fec47b593032b254f5e980de8ea54454d6"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "ash"
@@ -175,6 +178,16 @@ name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+
+[[package]]
+name = "bitflags_serde_shim"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25c3d626f0280ec39b33a6fc5c6c1067432b4c41e94aee40ded197a6649bf025"
+dependencies = [
+ "bitflags",
+ "serde",
+]
 
 [[package]]
 name = "block"
@@ -1501,6 +1514,7 @@ dependencies = [
  "num-traits",
  "petgraph",
  "rustc-hash",
+ "serde",
  "spirv",
  "termcolor",
  "thiserror",
@@ -2005,6 +2019,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1382d1f0a252c4bf97dc20d979a2fdd05b024acd7c2ed0f7595d7817666a157"
 
 [[package]]
+name = "ron"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "300a51053b1cb55c80b7a9fde4120726ddf25ca241a1cbb926626f62fb136bff"
+dependencies = [
+ "base64 0.13.0",
+ "bitflags",
+ "serde",
+]
+
+[[package]]
 name = "run-wasm"
 version = "0.1.0"
 dependencies = [
@@ -2057,6 +2082,75 @@ name = "safemem"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ef703b7cb59335eae2eb93ceb664c0eb7ea6bf567079d843e09420219668e072"
+
+[[package]]
+name = "saga-asset"
+version = "0.1.0"
+dependencies = [
+ "image 0.24.3",
+]
+
+[[package]]
+name = "saga-core"
+version = "0.1.0"
+dependencies = [
+ "saga-core-macros",
+]
+
+[[package]]
+name = "saga-core-macros"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "saga-game"
+version = "0.1.0"
+dependencies = [
+ "ahash 0.8.0",
+ "async-trait",
+ "bitflags",
+ "bytemuck",
+ "console_error_panic_hook",
+ "console_log",
+ "derivative",
+ "env_logger",
+ "futures",
+ "gif",
+ "glam",
+ "gltf",
+ "image 0.24.3",
+ "log",
+ "memoffset",
+ "paste",
+ "pollster",
+ "saga-core",
+ "thiserror",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "wasmtime",
+ "web-sys",
+ "wgpu",
+ "winit",
+]
+
+[[package]]
+name = "saga-gltf"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "gltf",
+]
+
+[[package]]
+name = "saga-transform"
+version = "0.1.0"
+dependencies = [
+ "glam",
+]
 
 [[package]]
 name = "scoped-tls"
@@ -2861,65 +2955,6 @@ name = "web-gpu-animation"
 version = "0.1.0"
 
 [[package]]
-name = "web-gpu-asset"
-version = "0.1.0"
-dependencies = [
- "image 0.24.3",
-]
-
-[[package]]
-name = "web-gpu-core"
-version = "0.1.0"
-dependencies = [
- "web-gpu-core-macros",
-]
-
-[[package]]
-name = "web-gpu-core-macros"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "web-gpu-game"
-version = "0.1.0"
-dependencies = [
- "ahash 0.8.0",
- "async-trait",
- "bitflags",
- "bytemuck",
- "console_error_panic_hook",
- "console_log",
- "derivative",
- "env_logger",
- "futures",
- "gif",
- "glam",
- "gltf",
- "image 0.24.3",
- "log",
- "pollster",
- "thiserror",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "wasmtime",
- "web-gpu-core",
- "web-sys",
- "wgpu",
- "winit",
-]
-
-[[package]]
-name = "web-gpu-transform"
-version = "0.1.0"
-dependencies = [
- "glam",
-]
-
-[[package]]
 name = "web-sys"
 version = "0.3.60"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2947,6 +2982,7 @@ dependencies = [
  "naga",
  "parking_lot",
  "raw-window-handle 0.5.0",
+ "serde",
  "smallvec",
  "static_assertions",
  "wasm-bindgen",
@@ -2974,6 +3010,8 @@ dependencies = [
  "parking_lot",
  "profiling",
  "raw-window-handle 0.5.0",
+ "ron",
+ "serde",
  "smallvec",
  "thiserror",
  "web-sys",
@@ -3027,6 +3065,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28fb86c1909233c804aa79b7dd1ad06ebd979b2a465e3e980582db0ea9e69f3f"
 dependencies = [
  "bitflags",
+ "bitflags_serde_shim",
+ "serde",
 ]
 
 [[package]]

@@ -1,0 +1,11 @@
+[package]
+name = "saga-gltf"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+futures = "0.3"
+
+[dependencies.gltf]
+version = "1.0"
+features = ["extras", "names"]
